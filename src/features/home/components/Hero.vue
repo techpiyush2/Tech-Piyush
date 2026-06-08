@@ -11,7 +11,7 @@ import AppearingText from "../../../components/AppearingText.vue";
     <div class="hero-content grid">
       <div class="hero-content-inner" id="hero-content-inner">
         <div class="hero-content-copys">
-          <h1 class="hero-title">Piyush<br />Kumar</h1>
+          <h1 class="hero-title">Piyush<br />Shah</h1>
           <Banner class="hero-banner" :copy="t('job-title')" v-if="!preloaderVisible" animated />
         </div>
       </div>
@@ -84,7 +84,11 @@ import AppearingText from "../../../components/AppearingText.vue";
   &-title {
     font-weight: 900;
     letter-spacing: 0.02em;
-    font-size: var(--font-size-title-lg);
+    font-size: var(--font-size-title-md);
+
+    @include mixins.mq("sm") {
+      font-size: var(--font-size-title-lg);
+    }
 
     @include mixins.landscape {
       font-size: var(--font-size-title-lg);

@@ -252,11 +252,11 @@ const setupSectionsAnimation = ({
       // Description animation
       tl.fromTo(
         contentDescription,
-        { opacity: 0, y: "10vh" },
-        { opacity: 1, y: "0vh", duration: 0.15, ease: "power1.out" },
+        { opacity: 0, y: "10vh", pointerEvents: "none" },
+        { opacity: 1, y: "0vh", pointerEvents: "auto", duration: 0.15, ease: "power1.out" },
         DESCRIPTION_DELAY,
       );
-      tl.to(contentDescription, { opacity: 0, y: "-10vh", duration: 0.15, ease: "power1.out" }, SERVICES_DELAY - 0.075);
+      tl.to(contentDescription, { opacity: 0, y: "-10vh", pointerEvents: "none", duration: 0.15, ease: "power1.out" }, SERVICES_DELAY - 0.075);
       tl.add(() => {
         tlDescription?.play();
       }, DESCRIPTION_DELAY);
@@ -264,8 +264,8 @@ const setupSectionsAnimation = ({
       // Services animation
       tl.fromTo(
         contentServices,
-        { opacity: 0, y: "10vh" },
-        { opacity: 1, y: "0vh", duration: 0.15, ease: "power1.out" },
+        { opacity: 0, y: "10vh", pointerEvents: "none" },
+        { opacity: 1, y: "0vh", pointerEvents: "auto", duration: 0.15, ease: "power1.out" },
         SERVICES_DELAY,
       );
       tl.add(() => {
@@ -275,8 +275,8 @@ const setupSectionsAnimation = ({
       // ProgressCount animation - fade in on portrait, never fade out
       tl.fromTo(
         contentProgressCount,
-        { opacity: 0, y: "10vh" },
-        { opacity: 1, y: "0vh", duration: 0.15, ease: "power1.out" },
+        { opacity: 0, y: "10vh", pointerEvents: "none" },
+        { opacity: 1, y: "0vh", pointerEvents: "auto", duration: 0.15, ease: "power1.out" },
         DESCRIPTION_DELAY,
       );
     }

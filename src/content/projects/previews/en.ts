@@ -2,39 +2,51 @@ import type { ProjectPreview } from "../../types";
 
 export default [
   {
+    title: "Sally AI",
+    slug: "sallyai",
+    thumbnail: "/works/1.svg",
+    description: "E-commerce AI Chatbot with semantic product discovery",
+  },
+  {
+    title: "EasyAdmission",
+    slug: "easyadmission",
+    thumbnail: "/works/2.svg",
+    description: "Student admission & application platform with payment support",
+  },
+  {
     title: "Thera Tap",
     slug: "theratap",
-    thumbnail: "/works/1.svg",
-    description: "Telemedicine web & mobile app",
-  },
-  {
-    title: "Employee Management",
-    slug: "ems",
-    thumbnail: "/works/2.svg",
-    description: "HR & workforce dashboard",
-  },
-  {
-    title: "Astrology App",
-    slug: "astrology",
     thumbnail: "/works/3.svg",
-    description: "Cross-platform consumer app",
+    description: "Telemedicine virtual consultation platform with scheduling",
   },
   {
-    title: "Course Experts",
-    slug: "courseexperts",
+    title: "Shivsangam",
+    slug: "shivsangam",
     thumbnail: "/works/4.svg",
-    description: "Course provider platform",
+    description: "Online doctor scheduling & patient management platform",
   },
   {
     title: "Iskedo",
     slug: "iskedo",
     thumbnail: "/works/5.svg",
-    description: "Service marketplace app",
+    description: "Service marketplace appointment booking platform",
   },
   {
-    title: "Dating App",
-    slug: "dating",
+    title: "EMS",
+    slug: "ems",
     thumbnail: "/works/6.svg",
-    description: "Social matching product",
+    description: "CRUD-based Employee records system with admin features",
+  },
+  {
+    title: "Pateron Ship",
+    slug: "pateronship",
+    thumbnail: "/works/1.svg",
+    description: "Subscription content creator platform with membership tiers",
+  },
+  {
+    title: "TruckOne",
+    slug: "truckone",
+    thumbnail: "/works/2.svg",
+    description: "Logistics shipment tracker & driver operations platform",
   },
 ] as const satisfies ProjectPreview[];

@@ -192,6 +192,8 @@ const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
     &-music {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
       gap: var(--space-xxs);
     }

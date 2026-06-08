@@ -91,6 +91,36 @@ const classes = computed(() => ["tag", `tag-variant-${props.variant}`]);
       background-color: #95630e;
       color: white;
     }
+
+    &-mongodb {
+      background-color: #47A248;
+      color: white;
+    }
+
+    &-fastapi {
+      background-color: #009688;
+      color: white;
+    }
+
+    &-python {
+      background-color: #3776AB;
+      color: white;
+    }
+
+    &-ai {
+      background-color: #8E44AD;
+      color: white;
+    }
+
+    &-stripe {
+      background-color: #635BFF;
+      color: white;
+    }
+
+    &-express {
+      background-color: #4b4b4b;
+      color: white;
+    }
   }
 }
 </style>

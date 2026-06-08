@@ -3,8 +3,7 @@ import type { ProjectContent } from "../../types";
 export default {
   title: "Thera Tap Telemedizin",
   theme: "dark",
-  tags: ["react", "node", "javascript"],
-  live: "https://play.google.com/store/apps/details?id=com.theratap_patient.thera_tap_patient",
+  tags: ["react", "node", "express", "websockets"],
   description:
-    "Thera Tap ist eine Telemedizin-Plattform, die Patienten und Anbieter über Web und Mobile verbindet.<br/><br/>Schwerpunkte: Front-End-Flows, API-Integration und stabile Video-Sprechstunden mit klarer, barrierearmer Oberfläche.",
+    "Thera Tap ist eine Telemedizin-Plattform, die Patienten und Anbieter über Web und Mobile verbindet.<br/><br/>Ich habe Module für Videosprechstunden, Buchungen, Sitzungsmanagement und APIs für sicheres, DSGVO/HIPAA-konformes Messaging entwickelt.",
 } as const satisfies ProjectContent;

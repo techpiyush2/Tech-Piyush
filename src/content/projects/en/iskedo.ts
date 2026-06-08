@@ -1,10 +1,9 @@
 import type { ProjectContent } from "../../types";
 
 export default {
-  title: "Iskedo Service App",
+  title: "Iskedo Booking Platform",
   theme: "dark",
-  tags: ["react", "node", "javascript"],
-  live: "http://74.208.25.43:3012/",
+  tags: ["react", "node", "express", "mongodb"],
   description:
-    "Iskedo connects customers with on-demand service providers through web and app surfaces.<br/><br/>I built booking flows, provider listings, and admin tooling with emphasis on clarity, notifications, and stable API contracts between client and server.",
+    "Iskedo is a multi-vendor appointment booking marketplace that manages scheduling workflows.<br/><br/>I built the vendor slot availability engine, optimized search filters, and implemented robust user authentication modules for both customers and vendors.",
 } as const satisfies ProjectContent;

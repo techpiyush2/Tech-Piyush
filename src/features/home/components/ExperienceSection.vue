@@ -94,8 +94,12 @@ useScrollReveal(rootRef);
 .highlights {
   grid-column: 1 / 13;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--space-md);
+
+  @include mixins.mq("sm") {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   @include mixins.mq("lg") {
     grid-column: 2 / 12;

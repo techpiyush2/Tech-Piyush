@@ -1,10 +1,9 @@
 import type { ProjectContent } from "../../types";
 
 export default {
-  title: "Mitarbeiterverwaltung",
-  theme: "dark",
-  tags: ["react", "node", "postgresql"],
-  live: "http://74.208.25.43:3007/",
+  title: "Mitarbeiterverwaltungssystem (EMS)",
+  theme: "light",
+  tags: ["node", "express", "mongodb"],
   description:
-    "Full-Stack-Dashboard zur Verwaltung von Teams, Rollen und internen HR-Prozessen.<br/><br/>React-Front-End mit Node.js-APIs, übersichtliche Tabellen und wartbare CRUD-Module.",
+    "EMS ist eine sichere, rollenbasierte Plattform zur Verwaltung von Mitarbeiterhierarchien.<br/><br/>Ich habe die CRUD-Diensteschicht entwickelt, MongoDB-Schemas optimiert, Berechtigungsprüfungen implementiert und Aggregationspipelines für HR-Berichte entworfen.",
 } as const satisfies ProjectContent;

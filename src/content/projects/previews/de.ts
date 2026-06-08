@@ -2,39 +2,51 @@ import type { ProjectPreview } from "../../types";
 
 export default [
   {
+    title: "Sally AI",
+    slug: "sallyai",
+    thumbnail: "/works/1.svg",
+    description: "E-Commerce-KI-Chatbot mit semantischer Produktsuche",
+  },
+  {
+    title: "EasyAdmission",
+    slug: "easyadmission",
+    thumbnail: "/works/2.svg",
+    description: "Studienzulassungs- und Bewerbungsplattform mit Zahlungsunterstützung",
+  },
+  {
     title: "Thera Tap",
     slug: "theratap",
-    thumbnail: "/works/1.svg",
-    description: "Telemedizin Web- & Mobile-App",
-  },
-  {
-    title: "Mitarbeiterverwaltung",
-    slug: "ems",
-    thumbnail: "/works/2.svg",
-    description: "HR- & Workforce-Dashboard",
-  },
-  {
-    title: "Astrologie-App",
-    slug: "astrology",
     thumbnail: "/works/3.svg",
-    description: "Cross-Platform Consumer App",
+    description: "Telemedizinische Plattform für virtuelle Konsultationen",
   },
   {
-    title: "Course Experts",
-    slug: "courseexperts",
+    title: "Shivsangam",
+    slug: "shivsangam",
     thumbnail: "/works/4.svg",
-    description: "Kursanbieter-Plattform",
+    description: "Online-Arztplanungs- und Patientenverwaltungsplattform",
   },
   {
     title: "Iskedo",
     slug: "iskedo",
     thumbnail: "/works/5.svg",
-    description: "Service-Marktplatz-App",
+    description: "Terminbuchungsplattform für den Dienstleistungsmarktplatz",
   },
   {
-    title: "Dating App",
-    slug: "dating",
+    title: "EMS",
+    slug: "ems",
     thumbnail: "/works/6.svg",
-    description: "Social-Matching-Produkt",
+    description: "CRUD-basiertes Mitarbeiterverwaltungssystem mit Admin-Funktionen",
+  },
+  {
+    title: "Pateron Ship",
+    slug: "pateronship",
+    thumbnail: "/works/1.svg",
+    description: "Abonnement-Content-Erstellerplattform mit Mitgliedschaftsstufen",
+  },
+  {
+    title: "TruckOne",
+    slug: "truckone",
+    thumbnail: "/works/2.svg",
+    description: "Logistik-Sendungsverfolgungs- und Fahrerplattform",
   },
 ] as const satisfies ProjectPreview[];

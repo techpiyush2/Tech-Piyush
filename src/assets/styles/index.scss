@@ -7,6 +7,12 @@
 @use "./projects.scss";
 @use "./preloader.scss";
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 html {
   background: var(--color-background-400);
   color: var(--color-text-400);
