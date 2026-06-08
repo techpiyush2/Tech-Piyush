@@ -11,7 +11,7 @@ import Footer from "../../../components/Footer.vue";
 import { ref, onMounted, onUnmounted, watchEffect, computed, watch } from "vue";
 import { three } from "../../../three";
 import { animations } from "../../../animations";
-import HeaderHome from "../../../components/HeaderHome.vue";
+// import HeaderHome from "../../../components/HeaderHome.vue";
 import { preloaderVisible } from "../../../composables/usePreloader";
 import ScrollIcon from "../../../components/ScrollIcon.vue";
 import { raycast } from "../../../three/utils/raycast";
@@ -168,7 +168,7 @@ watch(
       <Footer :withSocial="false"></Footer>
     </Layout>
   </div>
-  <HeaderHome v-if="projectsLoaded" />
+  <!-- <HeaderHome v-if="projectsLoaded" /> -->
 </template>
 
 <style scoped lang="scss">

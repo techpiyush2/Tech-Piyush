@@ -97,7 +97,7 @@ useSkillBarReveal(rootRef);
   max-width: 62ch;
 
   @include mixins.mq("lg") {
-    grid-column: 2 / 11;
+    grid-column: 2 / 12;
     font-size: var(--font-size-lg);
   }
 }
@@ -106,7 +106,7 @@ useSkillBarReveal(rootRef);
   grid-column: 1 / 13;
 
   @include mixins.mq("lg") {
-    grid-column: 2 / 11;
+    grid-column: 2 / 12;
   }
 }
 
@@ -143,7 +143,7 @@ useSkillBarReveal(rootRef);
   grid-column: 1 / 13;
 
   @include mixins.mq("lg") {
-    grid-column: 2 / 11;
+    grid-column: 2 / 12;
   }
 }
 

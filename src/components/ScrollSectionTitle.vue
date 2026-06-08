@@ -25,7 +25,7 @@ defineProps<{
   }
 
   @include mixins.mq("lg") {
-    grid-column: 2 / 11;
+    grid-column: 2 / 12;
   }
 
   &-copy {
