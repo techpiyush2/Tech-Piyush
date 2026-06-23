@@ -12,6 +12,7 @@ import headVertexShader from "../../shaders/avatar-head/vertex.glsl";
 import headFragmentShader from "../../shaders/avatar-head/fragment.glsl";
 import gsap from "gsap";
 import { aboutProgress } from "../../../animations/transitions/about";
+import { idleLife } from "./idle-life";
 //import { avatarHologram } from "./hologram";
 
 import type { Material, Bone, Texture } from "three";
@@ -33,6 +34,7 @@ const init = () => {
   animations.init();
   face.init();
   avatarLeftDesktop.init();
+  idleLife.init();
   gsap.ticker.add(tick);
 };
 
@@ -162,6 +164,7 @@ const destroy = () => {
   //mesh = null;
   //transform.clear();
   face.destroy();
+  idleLife.destroy();
   gsap.ticker.remove(tick);
 };
 

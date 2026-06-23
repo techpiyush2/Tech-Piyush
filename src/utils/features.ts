@@ -2,6 +2,7 @@ export const features = {
   sounds: true,
   introWave: true,
   startProject: true,
+  dayNight: true,
 } as const;
 
 export const isFeatureEnabled = (feature: keyof typeof features) => {

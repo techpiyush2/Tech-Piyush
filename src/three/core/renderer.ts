@@ -1,4 +1,4 @@
-import { WebGLRenderer, Vector3 } from "three";
+import { WebGLRenderer, Vector3, Color } from "three";
 import gsap from "gsap";
 import { scene } from "./scene";
 import { renderTarget } from "./renderTarget";
@@ -6,6 +6,8 @@ import { camera } from "./camera";
 import { sceneWeights } from "../../animations/scenes";
 import { colors } from "../common/colors";
 import { threeSizes } from "../utils/sizes";
+import { watch } from "vue";
+import { dayNightMode, isNight } from "../../composables/useDayNight";
 
 import type { Camera, Object3D, Scene } from "three";
 
@@ -15,6 +17,18 @@ let visible = true;
 let isActive = false;
 
 const emptyVector = new Vector3();
+
+const colorNightBg = new Color("#0b0e14");
+const tmpBgColor = new Color();
+const dayNightBlend = { value: isNight() ? 1.0 : 0.0 };
+
+watch(dayNightMode, (newMode) => {
+  gsap.to(dayNightBlend, {
+    value: newMode === "night" ? 1.0 : 0.0,
+    duration: 1.2,
+    ease: "power2.inOut",
+  });
+});
 
 const init = (_canvas: HTMLCanvasElement | null) => {
   if (instance) return;
@@ -55,8 +69,9 @@ const tick = () => {
     renderTarget.render();
   }
 
-  const color = sceneWeights.contact > 0.001 ? colors.beigeDark : colors.beigeLight;
-  instance.setClearColor(color);
+  const baseColor = sceneWeights.contact > 0.001 ? colors.beigeDark : colors.beigeLight;
+  tmpBgColor.copy(baseColor).lerp(colorNightBg, dayNightBlend.value);
+  instance.setClearColor(tmpBgColor);
   instance.render(scene.instance, camera.instance);
 };
 
@@ -115,4 +130,8 @@ const destroy = () => {
   visible = true;
 };
 
-export const renderer = { init, destroy, getInstance, compile, setIsActive };
+const getDayNightBlend = () => {
+  return dayNightBlend.value;
+};
+
+export const renderer = { init, destroy, getInstance, compile, setIsActive, getDayNightBlend };

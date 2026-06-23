@@ -10,6 +10,10 @@ import { mouse } from "./mouse";
 import { messagePopup } from "./message-popup";
 import { penguin } from "./penguin";
 import { music } from "./music";
+import { plant } from "./plant";
+import { photoFrame } from "./photo-frame";
+import { pinnedPapers } from "./pinned-papers";
+import { dust } from "./dust";
 
 import type { Object3D } from "three";
 
@@ -42,6 +46,10 @@ const init = () => {
     penguin.init(objects.penguin, { left: objects["penguin-wing-left"], right: objects["penguin-wing-right"] });
 
   if (objects?.music) music.init(objects.music);
+  if (objects?.plant) plant.init(objects.plant);
+  photoFrame.init();
+  pinnedPapers.init();
+  dust.init();
 };
 
 const initObjects = () => {
@@ -105,6 +113,10 @@ const destroy = () => {
   mouse.destroy();
   penguin.destroy();
   music.destroy();
+  plant.destroy();
+  photoFrame.destroy();
+  pinnedPapers.destroy();
+  dust.destroy();
 };
 
 export const room = { init, destroy, group, chairScrollRotation };

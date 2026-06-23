@@ -12,7 +12,6 @@ import { room } from ".";
 import { resources } from "../../../utils/resources";
 import { raycast } from "../../utils/raycast";
 import { sceneWeights } from "../../../animations/scenes";
-import { isFeatureEnabled } from "../../../utils/features";
 import { playSound } from "../../../features/sounds/utils/sounds";
 import gsap from "gsap";
 
