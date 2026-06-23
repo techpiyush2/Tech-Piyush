@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import glsl from "vite-plugin-glsl";
 
 export default defineConfig({
-  base: "/Tech-Piyush/",
+  base: process.env.VERCEL ? "/" : "/Tech-Piyush/",
   plugins: [
     vue(),
     glsl({
