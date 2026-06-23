@@ -82,7 +82,7 @@ const handleClick = () => {
   playSound("click");
 
   const nextIndex = (currentIndex + 1) % FRAME_PROJECTS.length;
-  const nextTexture = resources.items[FRAME_PROJECTS[nextIndex]] as Texture;
+  const nextTexture = resources.items[FRAME_PROJECTS[nextIndex]!] as Texture;
   nextTexture.colorSpace = SRGBColorSpace;
   nextTexture.flipY = false;
 

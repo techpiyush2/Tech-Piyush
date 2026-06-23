@@ -1,6 +1,5 @@
 import { Box3 } from "three";
 import { raycast } from "../../utils/raycast";
-import { room } from ".";
 import { sceneWeights } from "../../../animations/scenes";
 import { playSound } from "../../../features/sounds/utils/sounds";
 import gsap from "gsap";

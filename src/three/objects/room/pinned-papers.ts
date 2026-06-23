@@ -83,7 +83,7 @@ const init = () => {
     group.add(mesh);
     room.group.add(group);
 
-    const box = new Box3().setFromObject(group);
+    const box: ClickableBox3 = new Box3().setFromObject(group);
     box.onClick = () => dropPaper(i);
     box.hoverSound = "hover";
     box.onHoverChange = (isHovering) => {
