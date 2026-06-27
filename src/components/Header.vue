@@ -10,7 +10,6 @@ import { social } from "../content/social";
 import ButtonRound from "./ButtonRound.vue";
 import ArrowRight from "./icons/ArrowRight.vue";
 import SoundsToggle from "./SoundsToggle.vue";
-import ThemeToggle from "./ThemeToggle.vue";
 import { isFeatureEnabled } from "../utils/features";
 import { useRouter } from "../composables/useRouter";
 import { useFirstRoute } from "../composables/useFirstRoute";
@@ -95,7 +94,6 @@ const getInTouchClassNames = computed(() => {
         >{{ t("get-in-touch") }}</Button
       >
       <SoundsToggle class="header-sounds-toggle" :isDarkTheme="isDarkTheme" v-if="isFeatureEnabled('sounds')" />
-      <ThemeToggle class="header-theme-toggle" :isDarkTheme="isDarkTheme" v-if="isFeatureEnabled('dayNight')" />
     </div>
   </header>
 </template>
@@ -115,11 +113,22 @@ const getInTouchClassNames = computed(() => {
   z-index: var(--z-index-header);
   height: var(--height-header);
   pointer-events: none;
+  
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease;
 
   --scrolled: 0;
 
   &-scrolled {
     --scrolled: 1;
+    background-color: rgba(232, 224, 213, 0.72); // light beige frosted glass for light theme
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    &.header-dark {
+      background-color: rgba(19, 19, 19, 0.75); // dark grey frosted glass for dark theme
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
   }
 
   &-back {
@@ -206,10 +215,10 @@ const getInTouchClassNames = computed(() => {
     }
 
     &-image {
-      width: 36px;
+      width: 60px;
 
       @include mixins.mq("md") {
-        width: 40px;
+        width: 72px;
       }
     }
 

@@ -3,7 +3,6 @@ import { path } from "../../../composables/useRouteObserver";
 import gsap from "gsap";
 import { BASE_VOLUMES, musicTracks } from "../definitions/music";
 import { sceneWeights } from "../../../animations/scenes";
-import { sizes } from "../../../utils/sizes";
 import { howlerUnlocked, soundsEnabled } from "./useHowler";
 import { clamp } from "../../../utils/math";
 import { isFeatureEnabled } from "../../../utils/features";
@@ -14,17 +13,26 @@ import type { MusicTrack } from "../types";
 export const useMusic = () => {
   const tickVolumes = () => {
     if (path.value !== "/") {
+      // On non-home pages: keep luci at base, silence space ambient
       musicTracks.luci.volume(BASE_VOLUMES.luci);
       musicTracks.about.volume(0);
       return;
     }
 
-    musicTracks.luci.volume(clamp(1 - sceneWeights.about, 0, 1) * BASE_VOLUMES.luci);
-    musicTracks.about.volume(clamp(sceneWeights.about * 1.25 - 0.25, 0, 1) * BASE_VOLUMES.about);
+    // luci (room ambient): full when in hero, fades out as we enter the space section
+    const luciVol = clamp(1 - sceneWeights.about, 0, 1) * BASE_VOLUMES.luci;
+
+    // about (space ambient): fades in as soon as sceneWeights.about > 0
+    // Use a linear ramp from 0 → full volume across the full about weight range
+    const aboutVol = clamp(sceneWeights.about, 0, 1) * BASE_VOLUMES.about;
+
+    musicTracks.luci.volume(luciVol);
+    musicTracks.about.volume(aboutVol);
   };
 
   const tick = () => {
-    if (!sizes.visible) return;
+    // Always tick volumes when sounds are ready — no sizes.visible guard
+    // so the crossfade works even when tab is in background
     if (!soundsEnabled.value || !howlerUnlocked.value) return;
     tickVolumes();
   };
@@ -38,12 +46,15 @@ export const useMusic = () => {
     track.play();
   };
 
+  const startAllTracks = () => {
+    play("luci");
+    play("about");
+  };
+
   watchEffect(() => {
     if (!isFeatureEnabled("sounds")) return;
     if (!howlerUnlocked.value || !soundsEnabled.value) return;
-
-    play("luci");
-    play("about");
+    startAllTracks();
   });
 
   onMounted(() => {
@@ -52,8 +63,7 @@ export const useMusic = () => {
 
     const startMusic = () => {
       void unlockAudio().then(() => {
-        play("luci");
-        play("about");
+        startAllTracks();
       });
     };
 

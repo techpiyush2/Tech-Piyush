@@ -39,7 +39,10 @@ const init = () => {
 const initMesh = () => {
   if (mesh) return;
 
-  const texture = resources.items[FRAME_PROJECTS[0]] as Texture;
+  const texture = resources.items[FRAME_PROJECTS[0]] as Texture | undefined;
+  // Guard: texture resource may not be registered in sources.ts — skip silently.
+  if (!texture) return;
+
   texture.colorSpace = SRGBColorSpace;
   texture.flipY = false;
 
@@ -82,7 +85,8 @@ const handleClick = () => {
   playSound("click");
 
   const nextIndex = (currentIndex + 1) % FRAME_PROJECTS.length;
-  const nextTexture = resources.items[FRAME_PROJECTS[nextIndex]!] as Texture;
+  const nextTexture = resources.items[FRAME_PROJECTS[nextIndex]!] as Texture | undefined;
+  if (!nextTexture) { isTransitioning = false; return; }
   nextTexture.colorSpace = SRGBColorSpace;
   nextTexture.flipY = false;
 

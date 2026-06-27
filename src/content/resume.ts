@@ -1,7 +1,7 @@
 export const skillBars = [
   { label: "Backend Development", value: 95, color: "#0086bb" },
   { label: "Full Stack Development", value: 85, color: "#ff8400" },
-  { label: "AI & System Integrations", value: 80, color: "#052e87" },
+  { label: "AI & System Integrations", value: 80, color: "#a855f7" },
 ] as const;
 
 export const serviceCards = [
@@ -30,10 +30,10 @@ export const education = [
 ] as const;
 
 export const workExperience = [
-  { time: "2025 — Present", title: "Techeon Pvt. Ltd", detail: "Backend Developer (Payments, subscriptions & IAP workflows)" },
-  { time: "2024 — 2025", title: "Intelisync Technology", detail: "Backend Developer (Node.js & microservices modular backend)" },
-  { time: "2022 — 2023", title: "Zimo Technologies", detail: "Backend Developer (REST APIs, Aggregation pipelines)" },
-  { time: "2022", title: "Garage Solution Pvt Limited", detail: "Backend Developer (JWT Auth, Admin Panels, Dashboards)" },
+  { time: "2025 — Present", title: "Techeon Pvt. Ltd", detail: "Backend Engineer (Payments, subscriptions & IAP workflows)" },
+  { time: "2024 — 2025", title: "Intelisync Technology", detail: "Backend Engineer (Node.js & microservices modular backend)" },
+  { time: "2022 — 2023", title: "Zimo Technologies", detail: "Backend Engineer (REST APIs, Aggregation pipelines)" },
+  { time: "2022", title: "Garage Solution Pvt Limited", detail: "Backend Engineer (JWT Auth, Admin Panels, Dashboards)" },
 ] as const;
 
 export const techStack = [
@@ -44,6 +44,7 @@ export const techStack = [
   { name: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
   { name: "Python", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
   { name: "Java", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
   { name: "Spring Boot", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
   { name: "MongoDB", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
@@ -57,7 +58,7 @@ export const techStack = [
   { name: "Git", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
   { name: "Postman", src: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
   { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+  { name: "Claude", src: "/works/claude.svg" },
 ] as const;
 
 export const highlights = [

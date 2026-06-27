@@ -159,8 +159,16 @@ watch(
         <div class="intro-wrapper-spacer"></div>
         <div class="about-spacer" ref="aboutSpacerRef" id="about"></div>
       </div>
-      <Projects id="projects" @loaded="handleProjectsLoaded" />
-      <ExperienceSection />
+      <div class="dark-sections-wrapper">
+        <!-- Unified Mesh Gradient Background Layer for Projects & Experience -->
+        <div class="mesh-gradient-container">
+          <div class="mesh-ball mesh-ball--1"></div>
+          <div class="mesh-ball mesh-ball--2"></div>
+          <div class="mesh-ball mesh-ball--3"></div>
+        </div>
+        <Projects id="projects" @loaded="handleProjectsLoaded" />
+        <ExperienceSection />
+      </div>
       <SkillsSection />
       <div ref="contactRef" class="home-contact">
         <Contact id="contact" v-if="projectsLoaded" />
@@ -292,5 +300,13 @@ watch(
     height: calc(var(--lvh) * 100);
     max-height: calc(var(--lvh) * 100);
   }
+}
+
+.dark-sections-wrapper {
+  position: relative;
+  width: 100%;
+  background-color: #131313;
+  overflow: hidden;
+  z-index: 1;
 }
 </style>

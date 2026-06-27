@@ -19,14 +19,8 @@ export async function unlockAudio(): Promise<boolean> {
 
   if (!howlerUnlocked.value) {
     howlerUnlocked.value = true;
-
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === null) {
-      soundsEnabled.value = true;
-      localStorage.setItem(STORAGE_KEY, "true");
-    } else {
-      soundsEnabled.value = stored === "true";
-    }
+    soundsEnabled.value = true;
+    localStorage.setItem(STORAGE_KEY, "true");
   }
 
   return howlerUnlocked.value;

@@ -27,9 +27,7 @@ const BOARD = {
 };
 
 const PIN_OFFSETS = [
-  { y: 5.0, z: 3.4 },
   { y: 5.0, z: 1.6 },
-  { y: 3.9, z: 3.4 },
   { y: 3.9, z: 1.6 },
 ] as const;
 
@@ -38,7 +36,7 @@ const PAPER_H = 0.7;
 const FLOOR_Y = 0.05; // where a fallen paper settles (near the desk surface)
 
 // Paper colors (pinned sticky notes / sketches). Light, slightly varied hues.
-const PAPER_COLORS = ["#f7f3e8", "#eef6ec", "#fbf2e2", "#eef0f7"];
+const PAPER_COLORS = ["#fbf2e2", "#eef0f7"];
 
 type Paper = {
   group: Group; // holds mesh; we move/rotate the group so the box stays valid

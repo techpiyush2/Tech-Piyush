@@ -10,6 +10,13 @@ import { useScrollReveal, useSkillBarReveal } from "../../../composables/useScro
 const rootRef = ref<HTMLElement | null>(null);
 useScrollReveal(rootRef);
 useSkillBarReveal(rootRef);
+
+const getIconSrc = (src: string) => {
+  if (src.startsWith('http')) return src;
+  const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+  const path = src.startsWith('/') ? src : `/${src}`;
+  return `${base}${path}`;
+};
 </script>
 
 <template>
@@ -42,7 +49,7 @@ useSkillBarReveal(rootRef);
         <h3 class="tech-title">{{ t("tech-stack") }}</h3>
         <div class="tech-grid">
           <div v-for="tech in techStack" :key="tech.name" class="tech-chip">
-            <img :src="tech.src" :alt="tech.name" loading="lazy" />
+            <img :src="getIconSrc(tech.src)" :alt="tech.name" loading="lazy" />
             <span>{{ tech.name }}</span>
           </div>
         </div>
@@ -55,7 +62,7 @@ useSkillBarReveal(rootRef);
 .scroll-section {
   position: relative;
   width: 100%;
-  padding: 96px var(--space-outer);
+  padding: 48px var(--space-outer);
   min-height: calc(var(--lvh) * 95);
   background: linear-gradient(180deg, var(--color-dark-blue-500) 0%, var(--color-dark-blue-400) 100%);
   color: var(--color-text-cyan-400);
@@ -158,8 +165,13 @@ useSkillBarReveal(rootRef);
 
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
-  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--space-xs);
+
+  @include mixins.mq("md") {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--space-md);
+  }
 }
 
 .tech-chip {
@@ -167,7 +179,7 @@ useSkillBarReveal(rootRef);
   flex-direction: column;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-md);
   border: var(--stroke-sm) solid rgba(52, 191, 255, 0.35);
   background: rgba(0, 36, 116, 0.45);
@@ -175,21 +187,34 @@ useSkillBarReveal(rootRef);
     transform 0.25s ease,
     box-shadow 0.25s ease;
 
+  @include mixins.mq("md") {
+    padding: var(--space-sm);
+  }
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(52, 191, 255, 0.2);
   }
 
   img {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
+
+    @include mixins.mq("md") {
+      width: 36px;
+      height: 36px;
+    }
   }
 
   span {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     text-align: center;
     color: var(--color-text-cyan-300);
+
+    @include mixins.mq("md") {
+      font-size: var(--font-size-xs);
+    }
   }
 }
 </style>

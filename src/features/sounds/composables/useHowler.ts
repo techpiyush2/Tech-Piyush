@@ -83,7 +83,7 @@ export const useHowler = () => {
     Howler.volume(0);
 
     if (howlerUnlocked.value) {
-      soundsEnabled.value = localStorage.getItem("portfolio-soundsEnabled") !== "false";
+      soundsEnabled.value = true;
       syncEnabledVolume();
     }
 

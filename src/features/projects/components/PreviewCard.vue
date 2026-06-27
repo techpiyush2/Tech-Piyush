@@ -3,7 +3,7 @@ import Link from "../../../components/Link.vue";
 import Notch from "../../../components/Notch.vue";
 import ArrowRightLong from "../../../components/icons/ArrowRightLong.vue";
 import gsap from "gsap";
-import { onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ButtonRound from "../../../components/ButtonRound.vue";
 import { t } from "../../../i18n/utils/translate";
@@ -20,10 +20,58 @@ const props = defineProps<{
   preview?: ProjectPreview;
 }>();
 
+// Resolve thumbnail src with correct base URL (needed when base is /Tech-Piyush/)
+const thumbnailSrc = computed(() => {
+  if (!props.preview?.thumbnail) return '';
+  const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+  const path = props.preview.thumbnail.startsWith('/') ? props.preview.thumbnail : `/${props.preview.thumbnail}`;
+  return `${base}${path}`;
+});
+
+// 3D Tilt & Glow States
+const cardRef = ref<any>(null);
+const tiltX = ref(0);
+const tiltY = ref(0);
+const glowX = ref(50);
+const glowY = ref(50);
+const isHovered = ref(false);
+
+const handleMouseMove = (e: MouseEvent) => {
+  const el = cardRef.value?.$el || cardRef.value;
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const width = rect.width;
+  const height = rect.height;
+  
+  const maxTilt = 8;
+  tiltX.value = -((y / height) - 0.5) * maxTilt;
+  tiltY.value = ((x / width) - 0.5) * maxTilt;
+  
+  glowX.value = (x / width) * 100;
+  glowY.value = (y / height) * 100;
+};
+
+const handleMouseEnter = () => {
+  isHovered.value = true;
+};
+
+const handleMouseLeave = () => {
+  isHovered.value = false;
+  tiltX.value = 0;
+  tiltY.value = 0;
+};
+
 onMounted(async () => {
   if (!wrapperRef.value || ScrollTrigger.isInViewport(wrapperRef.value)) {
     return;
   }
+
+  // Animate the wrapper container – NOT the img element directly,
+  // because GSAP transforms on <img> create a GPU composite layer
+  // that freezes GIF animation in Chrome/WebKit.
+  const imgWrapper = wrapperRef.value.querySelector('.preview-card-image-wrapper');
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -32,7 +80,9 @@ onMounted(async () => {
     },
   });
   tl.fromTo(wrapperRef.value, { scale: 0.8 }, { scale: 1, duration: 0.4, ease: "power1.out" }, 0);
-  tl.fromTo(imageRef.value, { scale: 1.2 }, { scale: 1, duration: 0.4, ease: "power1.out" }, 0);
+  if (imgWrapper) {
+    tl.fromTo(imgWrapper, { scale: 1.1 }, { scale: 1, duration: 0.4, ease: "power1.out" }, 0);
+  }
 
   tlRef.value = tl;
 });
@@ -47,6 +97,7 @@ onUnmounted(() => {
 
 <template>
   <Link
+    ref="cardRef"
     class="preview-card children-unclickable"
     :to="`/project/${props.preview.slug}`"
     :aria-label="t('switch-to-project', { project: props.preview.title })"
@@ -54,11 +105,19 @@ onUnmounted(() => {
     data-sound="click"
     data-hoversound="hover"
     v-if="props.preview"
+    :style="{
+      transform: isHovered ? `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)` : 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
+      '--mouse-x': `${glowX}%`,
+      '--mouse-y': `${glowY}%`
+    }"
+    @mousemove="handleMouseMove"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
     <div class="preview-card-top" ref="wrapperRef">
       <div class="preview-card-image-wrapper">
         <div class="preview-card-image-container">
-          <img :src="props.preview.thumbnail" :alt="props.preview.title" class="preview-card-image" ref="imageRef" />
+          <img :src="thumbnailSrc" :alt="props.preview.title" class="preview-card-image" ref="imageRef" />
         </div>
       </div>
       <div class="preview-card-overlay">
@@ -81,11 +140,20 @@ onUnmounted(() => {
 
   <Link
     v-else
+    ref="cardRef"
     class="preview-card children-unclickable"
     data-cursor="arrow-external"
     data-hoversound="hover"
     external
     :href="social[0].url"
+    :style="{
+      transform: isHovered ? `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)` : 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
+      '--mouse-x': `${glowX}%`,
+      '--mouse-y': `${glowY}%`
+    }"
+    @mousemove="handleMouseMove"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
     <div class="preview-card-top preview-card-top-empty">
       <Plus class="preview-card-top-empty-icon" />
@@ -104,26 +172,64 @@ onUnmounted(() => {
   position: relative;
   border-radius: var(--radius-xl);
   z-index: var(--z-index-layout);
+  background: rgba(255, 255, 255, 0.02); // Translucent glass base
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease-out;
+  // NOTE: No will-change or transform-style here — they create a GPU stacking
+  // context that rasterizes child GIF images and freezes their animation.
 
+  // Background light reflection spotlight
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(
+      350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(0, 240, 255, 0.08),
+      transparent 50%
+    );
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  // Neon Border Highlight Spotlight
   &::after {
     content: "";
     position: absolute;
-    top: -8px;
-    left: -8px;
-    width: calc(100% + 16px);
-    height: calc(100% + 16px);
-    background-color: var(--color-grayscale-400);
-    border-radius: var(--radius-xl);
-    z-index: -1;
-    opacity: 0;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      150px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(0, 240, 255, 0.4),
+      transparent 60%
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    z-index: 2;
     pointer-events: none;
-    transition: opacity 0.1s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   @include mixins.hover {
     &:hover {
       --hover: 1;
+      border-color: rgba(0, 240, 255, 0.25);
+      box-shadow: 0 24px 50px rgba(0, 240, 255, 0.12), 0 16px 40px rgba(0, 0, 0, 0.35);
 
+      &::before,
       &::after {
         opacity: 1;
       }
@@ -133,8 +239,8 @@ onUnmounted(() => {
   &-content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    padding-top: var(--space-xs);
+    gap: var(--space-sm);
+    padding-top: var(--space-md);
   }
 
   &-overlay {
@@ -145,8 +251,8 @@ onUnmounted(() => {
 
   &-notch {
     position: absolute;
-    color: var(--color-beige-400);
-    --icon-color: var(--color-beige-400);
+    color: #131313; // Match the dark projects background
+    --icon-color: #131313;
     transform: scale(-1) rotate(90deg);
     height: var(--radius-lg);
 
@@ -165,7 +271,7 @@ onUnmounted(() => {
     position: absolute;
     bottom: -1px;
     right: -1px;
-    background-color: var(--color-beige-400);
+    background-color: #131313; // Match the dark background
     padding-left: 6px;
     padding-top: 6px;
     border-radius: 32px 0 0 0;
@@ -175,7 +281,7 @@ onUnmounted(() => {
 
   &-button {
     &-arrow {
-      transition: transform 0.1s ease-in-out;
+      transition: transform 0.15s ease-in-out;
       width: 100%;
       transform: rotate(calc(var(--hover) * -45deg));
     }
@@ -185,17 +291,22 @@ onUnmounted(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    // No transform on the img itself — transforms on <img> freeze GIF animation
+    display: block;
 
     &-container {
-      transition: transform 0.1s ease-in-out;
-      transform: scale(calc(1 + var(--hover) * 0.02));
+      // Use a subtle brightness instead of transform scale for hover effect
+      // to avoid GPU layer that would freeze GIFs
       aspect-ratio: 16/9;
+      transition: filter 0.25s ease;
+      filter: brightness(calc(1 - var(--hover) * 0.05));
     }
 
     &-wrapper {
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      background-color: var(--color-beige-500);
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
   }
 
@@ -205,18 +316,30 @@ onUnmounted(() => {
     aspect-ratio: 16/9;
 
     &-empty {
-      border: 4px dashed var(--color-grayscale-500);
-      border-radius: var(--radius-lg);
-      background-color: var(--color-grayscale-400);
+      border: 2px dashed rgba(0, 240, 255, 0.3);
+      border-radius: var(--radius-md);
+      background-color: rgba(255, 255, 255, 0.01);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+
+      .preview-card:hover & {
+        border-color: rgba(0, 240, 255, 0.7);
+        background-color: rgba(0, 240, 255, 0.02);
+      }
 
       &-icon {
         width: var(--icon-size-lg);
-        color: var(--color-text-300);
-        --icon-color: var(--color-text-300);
-        --stroke-width: 4px;
+        color: rgba(0, 240, 255, 0.5);
+        --icon-color: rgba(0, 240, 255, 0.5);
+        --stroke-width: 3px;
+        transition: color 0.25s ease, transform 0.25s ease;
+
+        .preview-card:hover & {
+          color: rgba(0, 240, 255, 0.9);
+          transform: rotate(90deg);
+        }
       }
     }
   }
@@ -224,18 +347,23 @@ onUnmounted(() => {
   &-copys {
     display: flex;
     flex-direction: column;
+    gap: 4px;
   }
 
   &-title {
     font-size: var(--font-size-title-xs);
-    font-weight: 700;
-    color: var(--color-text-400);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    font-family: "Sora", var(--font-family-base);
   }
 
   &-description {
-    font-size: var(--font-size-md);
-    color: var(--color-text-300);
-    font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: "Inter", var(--font-family-base);
   }
 }
 </style>

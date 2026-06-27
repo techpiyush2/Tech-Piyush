@@ -12,7 +12,7 @@ import { penguin } from "./penguin";
 import { music } from "./music";
 import { plant } from "./plant";
 import { photoFrame } from "./photo-frame";
-import { pinnedPapers } from "./pinned-papers";
+// import { pinnedPapers } from "./pinned-papers";
 import { dust } from "./dust";
 
 import type { Object3D } from "three";
@@ -48,7 +48,7 @@ const init = () => {
   if (objects?.music) music.init(objects.music);
   if (objects?.plant) plant.init(objects.plant);
   photoFrame.init();
-  pinnedPapers.init();
+  // pinnedPapers.init(); // disabled — papers removed per user request
   dust.init();
 };
 
@@ -115,7 +115,7 @@ const destroy = () => {
   music.destroy();
   plant.destroy();
   photoFrame.destroy();
-  pinnedPapers.destroy();
+  // pinnedPapers.destroy();
   dust.destroy();
 };
 

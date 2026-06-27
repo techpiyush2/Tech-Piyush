@@ -33,7 +33,6 @@ onMounted(loadPreviews);
 <template>
   <div class="projects">
     <NotchSection class="projects-notch-start" />
-    <NotchSection class="projects-notch-end" />
     <div class="grid">
       <div class="projects-title">
         <Banner class="projects-title-banner" :copy="t('selected')" size="sm" animated />
@@ -60,7 +59,8 @@ onMounted(loadPreviews);
   gap: var(--space-xl);
   padding-left: var(--space-outer);
   padding-right: var(--space-outer);
-  background-color: var(--color-beige-400);
+  background-color: transparent; // Transparent to share parent mesh background
+  color: #ffffff;
   min-height: calc(var(--lvh) * 100 + var(--radius-xxl));
   padding-top: 96px;
   padding-bottom: 96px;
@@ -92,6 +92,7 @@ onMounted(loadPreviews);
       font-weight: 900;
       letter-spacing: 0.02em;
       font-size: var(--font-size-title-md);
+      color: #ffffff; // Ensure readable white text on dark background
 
       @include mixins.mq("sm") {
         font-size: var(--font-size-title-lg);
@@ -121,17 +122,8 @@ onMounted(loadPreviews);
       top: 0;
       left: 0;
       transform: translateY(-100%);
-      color: var(--color-beige-400);
-      --icon-color: var(--color-beige-400);
-    }
-
-    &-end {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      color: var(--color-beige-400);
-      --icon-color: var(--color-beige-400);
-      z-index: 2;
+      color: #131313;
+      --icon-color: #131313;
     }
   }
 
@@ -141,19 +133,40 @@ onMounted(loadPreviews);
     grid-column: 1 / span 12;
     display: grid;
     gap: var(--space-lg);
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
 
     @include mixins.mq("md") {
+      grid-template-columns: repeat(2, 1fr);
       grid-column: 1 / span 12;
+
+      // Bento Grid card sizing
+      & > :nth-child(1) {
+        grid-column: span 2;
+      }
     }
 
     @include mixins.mq("lg") {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      grid-column: 3 / span 8;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column: 2 / span 10;
+
+      // Bento Grid card sizing
+      & > :nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+      & > :nth-child(2) {
+        grid-column: span 1;
+      }
+      & > :nth-child(3) {
+        grid-column: span 1;
+      }
+      & > :nth-child(4) {
+        grid-column: span 2;
+      }
     }
 
     @include mixins.mq("xl") {
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-column: 3 / span 8;
     }
   }
 }
