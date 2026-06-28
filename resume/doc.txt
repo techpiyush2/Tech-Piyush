@@ -1,10 +1,10 @@
 PIYUSH KUMAR
-Full Stack Software Developer
+Full Stack Software Engineer
 +91-9709486606 techpiyush06@gmail.com
 SUMMARY
 linkedin.com/in/techpiyush2 Pune, India
 piyushshah.in
-BackendandFull Stack Developer with 4 years of experience designing, building, and maintaining scalable web applications using Node.js, Express.js, 
+BackendandFull Stack Engineer with 4 years of experience designing, building, and maintaining scalable web applications using Node.js, Express.js, 
 MongoDB, and modern JavaScript/TypeScript stacks. Proven track record delivering production REST APIs, microservices, payment and subscription
 workflows, and third-party integrations.
 Hands-on experience with AI-powered systems including RAG  Retrieval-Augmented Generation), vector databases  Pinecone, FAISS, Qdrant), 
@@ -21,7 +21,7 @@ Enhanced User Engagement
 Developed AI chatbots increasing user engagement by 25% in E
 commerce.
 EXPERIENCE
-Backend Developer
+Backend Engineer
 Techeon Pvt. Ltd
 Expanded Api Integrations
 Integrated 5 third-party APIs increasing system functionality by 40%.
@@ -35,19 +35,19 @@ Remote
 •Optimized MongoDB queries, indexing strategies, and service-layer logic to support scalable growth
 •Collaborated with product, frontend, and QA teams for end-to-end feature delivery and release stability
 •Implemented reusable modules and consistent API patterns to reduce duplication and improve maintainability
-Backend Developer
+Backend Engineer
 Intelisync Technology
 •Designed modular backend architecture using Node.js and microservices for business-critical workflows
 •Integrated multiple third-party APIs (payments, notifications, external data) with robust error handling
 •Refactored legacy endpoints and optimized database access patterns for better performance
 •Established reusable service layers and documentation to improve team velocity and onboarding
-Backend Developer
+Backend Engineer
 Zimo Technologies
 •Developed and maintained REST APIs using Node.js, Express.js, and MongoDB for production applications
 •Built complex data pipelines using MongoDB aggregation for reporting and business analytics
 •Participated in Git-based workflows, peer code reviews, and sprint-based agile delivery
 •Delivered authentication, CRUD modules, and admin features aligned with client requirements
-Backend Developer
+Backend Engineer
 Garage Solution Pvt  Limited
 •Built backend modules for business workflows, admin panels, and operational dashboards
 •Implemented JWT authentication, role-based access patterns, and structured data models
