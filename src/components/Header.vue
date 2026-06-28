@@ -113,22 +113,11 @@ const getInTouchClassNames = computed(() => {
   z-index: var(--z-index-header);
   height: var(--height-header);
   pointer-events: none;
-  
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease;
 
   --scrolled: 0;
 
   &-scrolled {
     --scrolled: 1;
-    background-color: rgba(232, 224, 213, 0.72); // light beige frosted glass for light theme
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-
-    &.header-dark {
-      background-color: rgba(19, 19, 19, 0.75); // dark grey frosted glass for dark theme
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
   }
 
   &-back {

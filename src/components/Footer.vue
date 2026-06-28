@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import Social from "./Social.vue";
-import Link from "./Link.vue";
-import Clickable from "./Clickable.vue";
 import LangSwitch from "./LangSwitch.vue";
 import NotchSection from "./NotchSection.vue";
-import { t } from "../i18n/utils/translate";
-import { locale } from "../i18n/store";
 import ButtonRound from "./ButtonRound.vue";
 import { lenis } from "../composables/useScroll";
 import { profile } from "../content/profile";
@@ -22,7 +18,6 @@ const handleBackToTop = () => {
 
 const { withSocial = true } = defineProps<Props>();
 // Unused VITE_SHOW_ATTRIBUTION check removed to fix TS unused variable error
-
 </script>
 
 <template>
@@ -44,30 +39,6 @@ const { withSocial = true } = defineProps<Props>();
       <div class="footer-top">
         <Social v-if="withSocial" />
         <div class="footer-top-links">
-          <div class="footer-top-links-legal">
-            <Clickable renderAs="div">
-              <Link
-                :href="locale === 'hi' ? '/hi/privacy' : '/privacy'"
-                class="footer-link"
-                :external="true"
-                data-cursor="circle-white"
-                data-sound="click"
-                data-hoversound="hover"
-                >{{ t("privacy") }}</Link
-              >
-            </Clickable>
-            <Clickable renderAs="div">
-              <Link
-                :href="locale === 'hi' ? '/hi/legal' : '/legal'"
-                class="footer-link children-unclickable"
-                :external="true"
-                data-cursor="circle-white"
-                data-sound="click"
-                data-hoversound="hover"
-                >{{ t("legal") }}</Link
-              >
-            </Clickable>
-          </div>
           <LangSwitch />
         </div>
       </div>

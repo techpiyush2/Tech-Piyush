@@ -34,9 +34,11 @@ const classes = computed(() => [
   text-transform: uppercase;
   background-color: transparent;
   transition:
-    background-color 0.1s ease-in-out,
-    color 0.1s ease-in-out,
-    border-color 0.1s ease-in-out;
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 
   &-rounded {
     border-radius: 50%;
@@ -47,12 +49,18 @@ const classes = computed(() => [
     background-color: var(--color-accent-400, var(--color-orange-400));
     color: var(--color-accent-text-400, var(--color-white-400));
     --icon-color: var(--color-accent-text-400, var(--color-white-400));
+    border: 2px solid transparent;
 
     @include mixins.hover {
       &:hover {
-        background-color: var(--color-hover, var(--color-black-400));
-        color: var(--color-hover-text, var(--color-white-400));
-        --icon-color: var(--color-hover-text, var(--color-white-400));
+        background-color: rgba(255, 138, 0, 0.05);
+        color: var(--color-orange-400);
+        --icon-color: var(--color-orange-400);
+        border-color: var(--color-orange-400);
+        transform: translateY(-2px);
+        box-shadow: 
+          0 6px 20px rgba(255, 138, 0, 0.08),
+          0 2px 6px rgba(0, 0, 0, 0.04);
       }
     }
   }
@@ -61,12 +69,18 @@ const classes = computed(() => [
     background-color: var(--color-grayscale-500);
     color: var(--color-text-400);
     --icon-color: var(--color-text-400);
+    border: 2px solid transparent;
 
     @include mixins.hover {
       &:hover {
-        background-color: var(--color-hover, var(--color-black-400));
-        color: var(--color-white-400);
-        --icon-color: var(--color-white-400);
+        background-color: rgba(255, 138, 0, 0.05) !important;
+        color: var(--color-orange-400) !important;
+        --icon-color: var(--color-orange-400) !important;
+        border-color: var(--color-orange-400) !important;
+        transform: translateY(-2px);
+        box-shadow: 
+          0 6px 20px rgba(255, 138, 0, 0.08),
+          0 2px 6px rgba(0, 0, 0, 0.04);
       }
     }
   }
@@ -104,10 +118,14 @@ const classes = computed(() => [
 
     @include mixins.hover {
       &:hover {
-        background-color: var(--color-hover, var(--color-black-400));
-        color: var(--color-white-400);
-        --icon-color: var(--color-white-400);
-        border-color: var(--color-hover, var(--color-black-400));
+        background-color: rgba(255, 138, 0, 0.05);
+        color: var(--color-orange-400);
+        --icon-color: var(--color-orange-400);
+        border-color: var(--color-orange-400);
+        transform: translateY(-2px);
+        box-shadow: 
+          0 6px 20px rgba(255, 138, 0, 0.08),
+          0 2px 6px rgba(0, 0, 0, 0.04);
       }
     }
   }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import { transitions } from "../../../animations";
-import { t } from "../../../i18n/utils/translate";
 import { profile } from "../../../content/profile";
 import { social } from "../../../content/social";
 import gsap from "gsap";
@@ -132,38 +131,35 @@ onUnmounted(() => {
     <div class="contact-orb contact-orb--2" aria-hidden="true"></div>
 
     <div class="contact-content">
-      <!-- Headline with word-clip reveal -->
+      <!-- Headline with modern filled/outlined text styles -->
       <h2 class="contact-title" ref="titleRef">
-        <span class="word-clip"><span class="word">Let's</span></span>
-        <span class="word-clip"><span class="word">work</span></span>
+        <span class="word-clip"><span class="word title-filled">LET'S</span></span>
+        <span class="word-clip"><span class="word title-outlined">WORK</span></span>
         <br />
-        <span class="word-clip"><span class="word">together!</span></span>
+        <span class="word-clip"><span class="word title-filled title-accent">TOGETHER.</span></span>
       </h2>
 
-      <!-- Email with shimmer + copy -->
+      <!-- Email with copy-on-click button -->
       <div class="contact-email-wrap" ref="emailRef">
-        <a
-          :href="`mailto:${profile.email}`"
+        <button
           class="contact-email"
           data-cursor="circle-white"
-          @click.prevent="copyEmail"
+          @click="copyEmail"
+          aria-label="Copy email address"
         >
           <span class="contact-email-text">{{ profile.email }}</span>
-          <span class="contact-email-shimmer" aria-hidden="true"></span>
-        </a>
+          <svg class="contact-email-copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="contact-email-underline"></span>
+        </button>
         <transition name="fade">
           <span v-if="copied" class="contact-copied">Copied!</span>
         </transition>
       </div>
 
-      <!-- Divider -->
-      <div class="contact-divider" aria-hidden="true">
-        <span class="contact-divider-line"></span>
-        <span class="contact-divider-dot"></span>
-        <span class="contact-divider-line"></span>
-      </div>
-
-      <!-- Social icons with magnetic hover -->
+      <!-- Social icons with modern pill layout -->
       <div class="contact-icons" ref="iconsRef">
         <a
           v-for="item in social"
@@ -175,10 +171,9 @@ onUnmounted(() => {
           :aria-label="iconLabels[item.name]"
           data-cursor="circle-white"
           data-hoversound="hover"
-          @mousemove="(e) => handleMagnet(e, $event.currentTarget as HTMLElement)"
-          @mouseleave="(e) => resetMagnet($event.currentTarget as HTMLElement)"
+          @mousemove="handleMagnet($event, $event.currentTarget as HTMLElement)"
+          @mouseleave="resetMagnet($event.currentTarget as HTMLElement)"
         >
-          <span class="contact-icon-ring" aria-hidden="true"></span>
           <span class="contact-icon-inner">
             <component :is="icons[item.name as keyof typeof icons]" class="contact-icon-svg" />
           </span>
@@ -257,16 +252,27 @@ onUnmounted(() => {
   @include mixins.mq("lg") { grid-column: 2 / 6; }
 }
 
-/* ── Title ──────────────────────────────────────────────────────────── */
 .contact-title {
+  font-family: "Urbanist", sans-serif;
   font-weight: 900;
-  letter-spacing: -0.01em;
-  font-size: var(--font-size-title-md);
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.2rem, 6.5vw, 4rem);
+  line-height: 1.05;
   perspective: 800px;
+  text-transform: uppercase;
+}
 
-  @include mixins.mq("sm")  { font-size: var(--font-size-title-lg); }
-  @include mixins.mq("xl")  { font-size: var(--font-size-title-xl); }
+.title-filled {
+  color: var(--color-text-400);
+}
+
+.title-outlined {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-text-400);
+}
+
+.title-accent {
+  color: var(--color-orange-400);
 }
 
 .word-clip {
@@ -278,7 +284,6 @@ onUnmounted(() => {
 
 .word {
   display: inline-block;
-  /* initial hidden state set by GSAP */
 }
 
 /* ── Email ──────────────────────────────────────────────────────────── */
@@ -287,71 +292,69 @@ onUnmounted(() => {
   align-items: center;
   gap: var(--space-sm);
   flex-wrap: wrap;
+  margin-top: var(--space-xs);
 }
 
 .contact-email {
   position: relative;
-  display: inline-block;
-  font-size: clamp(0.95rem, 2vw, 1.2rem);
-  font-weight: 600;
-  color: var(--color-cyan-400, #38bdf8);
-  text-decoration: none;
-  overflow: hidden;
-  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-text-400);
+  background: none;
+  border: none;
+  padding: 0 0 4px 0;
   cursor: pointer;
+  font-family: "Urbanist", sans-serif;
+  transition: color 0.3s ease;
 
-  &::after {
-    content: '';
+  .contact-email-copy-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.65;
+    transition: transform 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+  }
+
+  .contact-email-underline {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, #FF8A00, #FFD966, #FF8A00);
-    background-size: 200% 100%;
-    border-radius: 2px;
-    animation: shimmerLine 2.5s linear infinite;
+    background-color: var(--color-orange-400);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  &:hover .contact-email-text {
-    color: #FF8A00;
-    transition: color 0.25s;
+  &:hover {
+    color: var(--color-orange-400);
+
+    .contact-email-copy-icon {
+      opacity: 1;
+      color: var(--color-orange-400);
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .contact-email-underline {
+      transform: scaleX(1);
+    }
   }
-}
-
-.contact-email-shimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(255, 138, 0, 0.18) 50%,
-    transparent 65%
-  );
-  background-size: 250% 100%;
-  animation: shimmerPass 2.8s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmerLine {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-@keyframes shimmerPass {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
 }
 
 .contact-copied {
-  font-size: 0.75rem;
+  font-family: "ProFontWindows", monospace;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #FF8A00;
-  background: rgba(255, 138, 0, 0.12);
-  border: 1px solid rgba(255, 138, 0, 0.3);
-  padding: 2px 10px;
-  border-radius: 20px;
+  color: var(--color-orange-400);
+  background: rgba(255, 138, 0, 0.08);
+  border: 1px solid rgba(255, 138, 0, 0.2);
+  padding: 3px 12px;
+  border-radius: 4px;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .fade-enter-active,
@@ -359,121 +362,73 @@ onUnmounted(() => {
 .fade-enter-from  { opacity: 0; transform: translateY(6px); }
 .fade-leave-to    { opacity: 0; transform: translateY(-6px); }
 
-/* ── Divider ─────────────────────────────────────────────────────── */
-.contact-divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  opacity: 0.3;
-}
-
-.contact-divider-line {
-  flex: 1;
-  height: 1px;
-  background: currentColor;
-  max-width: 60px;
-}
-
-.contact-divider-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #FF8A00;
-  opacity: 1;
-  box-shadow: 0 0 8px 2px rgba(255,138,0,0.5);
-  animation: pulseDot 2s ease-in-out infinite;
-}
-
-@keyframes pulseDot {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(255,138,0,0.5); }
-  50%       { box-shadow: 0 0 16px 6px rgba(255,138,0,0.3); }
-}
-
 /* ── Social Icons ────────────────────────────────────────────────── */
 .contact-icons {
   display: flex;
   gap: var(--space-md);
   flex-wrap: wrap;
+  margin-top: var(--space-sm);
 }
 
 .contact-icon-wrap {
   position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
   text-decoration: none;
-  color: inherit;
+  color: var(--color-text-400);
   cursor: pointer;
-  will-change: transform;
-}
-
-.contact-icon-ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1.5px solid transparent;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  pointer-events: none;
-}
-
-.contact-icon-inner {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(0, 0, 0, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.6);
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
-  transition:
-    background 0.25s ease,
+  -webkit-backdrop-filter: blur(8px);
+  transition: 
     border-color 0.25s ease,
+    background-color 0.25s ease,
     transform 0.25s ease,
     box-shadow 0.25s ease;
-}
-
-.contact-icon-svg {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.25s ease;
-}
-
-.contact-icon-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  color: #FF8A00;
-}
-
-/* Hover state */
-.contact-icon-wrap:hover {
-  .contact-icon-ring {
-    border-color: rgba(255, 138, 0, 0.5);
-    box-shadow: 0 0 0 4px rgba(255, 138, 0, 0.08);
-  }
 
   .contact-icon-inner {
-    background: rgba(255, 138, 0, 0.1);
-    border-color: rgba(255, 138, 0, 0.4);
-    box-shadow:
-      0 8px 24px rgba(255, 138, 0, 0.2),
-      0 2px 8px rgba(0, 0, 0, 0.08);
-    transform: scale(1.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .contact-icon-svg {
-    transform: scale(1.12);
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-400);
+    transition: transform 0.25s ease, color 0.25s ease;
   }
 
   .contact-icon-label {
-    opacity: 1;
-    transform: translateY(0);
+    font-family: "ProFontWindows", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-400);
+    transition: color 0.25s ease;
+  }
+
+  &:hover {
+    border-color: var(--color-orange-400);
+    background-color: rgba(255, 138, 0, 0.05);
+    box-shadow: 
+      0 6px 20px rgba(255, 138, 0, 0.06),
+      0 2px 6px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+
+    .contact-icon-svg {
+      transform: scale(1.1);
+      color: var(--color-orange-400);
+    }
+
+    .contact-icon-label {
+      color: var(--color-orange-400);
+    }
   }
 }
 </style>

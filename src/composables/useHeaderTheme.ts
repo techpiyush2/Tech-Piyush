@@ -7,35 +7,30 @@ const hasScrolledIntoView = ref(false);
 
 let listenerCount = 0;
 let aboutElement: HTMLElement | null = null;
-let skillsElement: HTMLElement | null = null;
-
-const isInViewport = (el: HTMLElement, topOffset = 0) => {
-  const rect = el.getBoundingClientRect();
-  const viewHeight = sizes.height;
-  return rect.top < viewHeight * 0.55 && rect.bottom > topOffset;
-};
+let contactElement: HTMLElement | null = null;
 
 const handleScroll = () => {
   if (!aboutElement) {
     aboutElement = typeof window !== "undefined" ? document.querySelector("#about") : null;
   }
-  if (!skillsElement) {
-    skillsElement = typeof window !== "undefined" ? document.querySelector("#skills") : null;
+  if (!contactElement) {
+    contactElement = typeof window !== "undefined" ? document.querySelector("#contact") : null;
   }
 
   if (!aboutElement) return;
 
   const aboutBounding = aboutElement.getBoundingClientRect();
   const isLandscape = sizes.isLandscape;
+  
+  // Header shows up once we scroll past Hero (start of about section)
   const isScrolledIntoView = aboutBounding.top - (isLandscape ? sizes.height * 0.225 : 0) < 0;
-  const isScrolledPastAbout = aboutBounding.bottom - 36 < 0;
-  const inSkills = skillsElement ? isInViewport(skillsElement, 80) : false;
+  
+  // Theme is dark for all sections between about start and contact start
+  const contactInViewport = contactElement ? contactElement.getBoundingClientRect().top < sizes.height * 0.55 : false;
+  const nextIsDarkTheme = isScrolledIntoView && !contactInViewport;
 
-  const nextHasScrolledIntoView = isScrolledIntoView || inSkills;
-  const nextIsDarkTheme = (isScrolledIntoView && !isScrolledPastAbout) || inSkills;
-
-  if (hasScrolledIntoView.value !== nextHasScrolledIntoView) {
-    hasScrolledIntoView.value = nextHasScrolledIntoView;
+  if (hasScrolledIntoView.value !== isScrolledIntoView) {
+    hasScrolledIntoView.value = isScrolledIntoView;
   }
 
   if (isDarkTheme.value !== nextIsDarkTheme) {
@@ -72,7 +67,6 @@ export const useHeaderTheme = () => {
       listenerCount = 0;
       detachScrollListener();
       aboutElement = null;
-      skillsElement = null;
     }
   });
 
